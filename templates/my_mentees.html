@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}My Mentees{% endblock %}
+{% block content %}
+<div class="mentees-container">
+    <!-- HEADER -->
+    <div class="page-header clean">
+        <h1>My Mentees ({{ mentees|length }})</h1>
+    </div>
+
+    <!-- MENTEES CARDS -->
+    <div class="mentees-grid clean">
+        {% for mentee in mentees %}
+        <div class="mentee-card clean">
+            <div class="mentee-name">
+                <h3>{{ mentee.student }}</h3>
+            </div>
+            <div class="mentee-stats clean">
+                <div class="stat-box">
+                    <div class="stat-number">{{ mentee.avg_score }}</div>
+                    <div class="stat-label">AVG</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">{{ mentee.total_tasks }}</div>
+                    <div class="stat-label">TASKS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">{{ mentee.best_score }}</div>
+                    <div class="stat-label">BEST</div>
+                </div>
+            </div>
+            <a href="{{ url_for('mentee_tasks', mentee_name=mentee.student.replace(' ', '_')) }}" 
+               class="btn-clean primary">
+                View Tasks →
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- PENDING SECTION -->
+    {% if pending_submissions %}
+    <div class="pending-section">
+        <h3>Pending Grading ({{ pending_submissions|length }})</h3>
+        <div class="table-responsive">
+            <table class="simple-table">
+                <tr><th>Student</th><th>Task</th><th>Date</th><th>File</th></tr>
+                {% for sub in pending_submissions %}
+                <tr>
+                    <td>{{ sub.student }}</td>
+                    <td>{{ sub.task[:30] }}...</td>
+                    <td>{{ sub.date }}</td>
+                    <td><a href="/uploads/{{ sub.file_path.split('/')[-1] }}">View</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

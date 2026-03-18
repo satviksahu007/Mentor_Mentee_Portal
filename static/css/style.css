@@ -1,0 +1,1277 @@
+/* ===== MENTORHUB - PROFESSIONAL STYLESHEET ===== */
+/* Optimized, organized, fully responsive, March 2026 */
+
+/* ========================================================================== 
+   1. RESET & BASE STYLES 
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #2d3748;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* ========================================================================== 
+   2. NAVBAR 
+   ========================================================================== */
+.navbar {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #4a5568;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #4a5568;
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links a:hover {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ========================================================================== 
+   3. LAYOUT CONTAINERS 
+   ========================================================================== */
+.main-content,
+.dashboard-wrapper,
+.mentees-dashboard,
+.mentee-tasks-hero {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* ========================================================================== 
+   4. CARDS (Unified Glassmorphism) 
+   ========================================================================== */
+.auth-card,
+.stat-card,
+.chart-card,
+.chart-card-large,
+.form-container,
+.page-header,
+.mentee-header,
+.mentee-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+}
+
+
+
+/* ========================================================================== 
+   5. BUTTONS 
+   ========================================================================== */
+.btn-primary,
+.btn-secondary,
+.mentee-btn,
+.mentee-card a,
+.back-link,
+table a,
+.btn-clean.primary {
+    background: white;
+    color: #1f2937;
+    border: 3px solid #10b981;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    margin: 0.5rem 0;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.mentee-btn:hover,
+.mentee-card a:hover,
+.back-link:hover,
+table a:hover,
+.btn-clean.primary:hover {
+    background: #10b981;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(16,185,129,0.4);
+}
+
+/* Auth buttons gradient */
+.auth-container .btn-primary,
+.auth-container .btn-secondary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+}
+
+.auth-container .btn-primary:hover,
+.auth-container .btn-secondary:hover {
+    box-shadow: 0 15px 35px rgba(102,126,234,0.4);
+}
+
+/* ========================================================================== 
+   6. FORMS & INPUTS 
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1.75rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+/* ========================================================================== 
+   7. DASHBOARD STATS 
+   ========================================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 4rem;
+}
+
+.stat-card {
+    padding: 2.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--card-accent));
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+}
+
+.stat-card i.icon {
+    font-size: 3.2rem;
+    width: 85px;
+    height: 85px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.stat-content h3 {
+    font-size: 3rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 800;
+    color: #2d3748;
+    line-height: 1.1;
+}
+
+.stat-content p {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #718096;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* STAT CARD COLORS */
+.stat-card.green { --card-accent: #48bb78; }
+.stat-card.green i.icon { background: linear-gradient(135deg, #48bb78, #38a169); color: white; }
+
+.stat-card.blue { --card-accent: #4299e1; }
+.stat-card.blue i.icon { background: linear-gradient(135deg, #4299e1, #3182ce); color: white; }
+
+.stat-card.orange { --card-accent: #ed8936; }
+.stat-card.orange i.icon { background: linear-gradient(135deg, #ed8936, #dd6b20); color: white; }
+
+.stat-card.purple { --card-accent: #9f7aea; }
+.stat-card.purple i.icon { background: linear-gradient(135deg, #9f7aea, #805ad5); color: white; }
+
+.stat-card.yellow { --card-accent: #ffd23f; }
+.stat-card.yellow i.icon { background: linear-gradient(135deg, #ffd23f, #f6ad55); color: #2d3748; }
+
+/* ========================================================================== 
+   8. CHARTS & GRIDS 
+   ========================================================================== */
+.chart-section,
+.chart-hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65vh;
+    padding: 2rem 0;
+}
+
+.chart-card,
+.chart-card-large {
+    padding: 4rem 3.5rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.dashboard-chart,
+.hero-chart {
+    width: 100%;
+    max-height: 650px;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+.stats-row,
+.mentee-stats,
+.mentees-grid,
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* ========================================================================== 
+   9. TABLES 
+   ========================================================================== */
+.table-responsive {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+    padding: 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #4a5568;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover td {
+    background: #f7fafc;
+}
+
+/* ========================================================================== 
+   10. HEADERS & BADGES 
+   ========================================================================== */
+.page-header,
+.mentee-header {
+    padding: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h2,
+.mentee-header h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.stat-badge,
+.badge {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(66,153,225,0.3);
+}
+
+.stat-badge.avg-good { background: linear-gradient(135deg, #48bb78, #38a169); }
+.stat-badge.avg-fair { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+
+/* ========================================================================== 
+   11. RESPONSIVE DESIGN 
+   ========================================================================== */
+@media (max-width: 1024px) { .chat-sidebar { width: 320px; } }
+
+@media (max-width: 768px) {
+    .main-content, .dashboard-wrapper, .mentees-dashboard { padding: 1rem; }
+    .navbar { flex-direction: column; gap: 1rem; padding: 1rem; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .stats-row, .mentees-grid, .cards-grid { grid-template-columns: 1fr; }
+    .stat-card, .mentee-card { flex-direction: column; text-align: center; padding: 1.75rem; }
+    .stat-content h3 { font-size: 2.3rem; }
+    .chart-card, .chart-card-large { padding: 2rem 1.5rem; margin: 1rem; }
+    .dashboard-chart, .hero-chart { max-height: 450px; }
+}
+
+@media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+
+/* ========================================================================== 
+   12. MENTEE CARDS (with View Task button support)
+   ========================================================================== */
+.mentee-card {
+    position: relative;
+    padding: 2.5rem;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.mentee-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+}
+
+.mentee-card h3 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* KEEP your existing .view-task-btn from section 4 - it's perfect */
+.view-task-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 85%;
+    box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+}
+
+.view-task-btn:hover {
+    background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102,126,234,0.4);
+}
+
+
+/* ========================================================================== 
+   13. ASSIGN TASK FORM 
+   ========================================================================== */
+.assign-task-container, .assign-task-form {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.assign-task-header, .assign-task-form {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(25px);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+.assign-task-form input, .assign-task-form select, .assign-task-form textarea {
+    background: white;
+    border: 2px solid #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* ========================================================================== 
+   14. MESSAGES PAGE 
+   ========================================================================== */
+.chat-contact.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.chat-contact {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+
+   .new-msg-modal {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width: 100%; height: 100%;
+    justify-content: center; align-items: center;
+    z-index: 999;
+}
+.new-msg-modal .modal-content {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+}
+.new-msg-modal.show {
+    display: flex;
+}
+
+/* WRAPPER */
+.messages-wrapper { 
+    padding: 2rem; 
+    min-height: 100vh; 
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+}
+
+/* NEW MESSAGE BAR */
+.new-message-bar {
+    position: sticky; top: 2rem; z-index: 10; margin-bottom: 2rem; text-align: center;
+}
+
+.new-msg-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; padding: 1rem 2.5rem; border-radius: 50px;
+    font-weight: 600; font-size: 1rem; cursor: pointer; 
+    box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.new-msg-btn:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 15px 40px rgba(102,126,234,0.5); 
+}
+
+/* MAIN CONTAINER */
+.messages-container { 
+    height: calc(100vh - 160px); 
+    display: flex; gap: 0; 
+    max-width: 1400px; margin: 0 auto;
+    border-radius: 32px; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+    backdrop-filter: blur(20px);
+}
+
+/* CHAT SIDEBAR */
+.chat-sidebar {
+    width: 380px; background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.3);
+    display: flex; flex-direction: column;
+}
+
+.chat-search {
+    padding: 1.5rem; display: flex; align-items: center; gap: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.chat-search i { color: #a0aec0; font-size: 1.1rem; }
+.chat-search input { 
+    flex: 1; border: none; background: rgba(0,0,0,0.05); 
+    padding: 0.75rem 1rem; border-radius: 20px; font-size: 0.9rem;
+}
+
+.chat-list { flex: 1; overflow-y: auto; padding: 1rem; }
+
+.chat-contact {
+    display: flex; gap: 1rem; padding: 1.25rem; border-radius: 20px; 
+    margin-bottom: 0.5rem; cursor: pointer; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-contact:hover, .chat-contact.active {
+    background: rgba(102,126,234,0.15); transform: translateX(4px);
+    box-shadow: 0 8px 25px rgba(102,126,234,0.15);
+}
+
+.contact-avatar { 
+    width: 52px; height: 52px; border-radius: 50%; 
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; font-size: 1.3rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.contact-details { flex: 1; }
+.contact-name { font-weight: 600; font-size: 1rem; margin: 0 0 0.25rem 0; color: #2d3748; }
+.contact-preview { color: #718096; font-size: 0.85rem; }
+.contact-time { font-size: 0.8rem; color: #a0aec0; font-weight: 500; min-width: 45px; text-align: right; }
+
+/* MAIN CHAT */
+.chat-main { flex: 1; display: flex; flex-direction: column; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); }
+
+.chat-header-main {
+    padding: 1.75rem 2rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.8);
+}
+
+.chat-user-info { display: flex; align-items: center; gap: 1.25rem; }
+.user-avatar-lg { 
+    width: 60px; height: 60px; border-radius: 50%; 
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white; font-size: 1.6rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.status-online { 
+    width: 12px; height: 12px; background: #48bb78; border-radius: 50%; 
+    display: inline-block; margin: 0 0.5rem; box-shadow: 0 0 0 2px white;
+}
+
+.chat-header-main h3 { margin: 0 0 0.25rem 0; font-size: 1.4rem; font-weight: 700; color: #2d3748; }
+.chat-header-main small { color: #718096; font-weight: 500; }
+
+/* CHAT MESSAGES - SIDE ALIGNED */
+.chat-messages {
+    flex: 1; padding: 2.5rem 2rem; overflow-y: auto; 
+    display: flex; flex-direction: column; gap: 1.75rem; align-items: stretch;
+}
+
+.message { display: flex; gap: 1rem; animation: messageSlideIn 0.3s ease-out; }
+
+/* SENT MESSAGES - RIGHT SIDE */
+.message.sent {
+    align-self: flex-end !important; max-width: 70%; flex-direction: row-reverse;
+}
+
+.message.sent .message-bubble {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important; border-radius: 22px 22px 6px 22px;
+    margin-left: auto; box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+}
+
+/* RECEIVED MESSAGES - LEFT SIDE */
+.message.received {
+    align-self: flex-start !important; max-width: 70%; flex-direction: row;
+}
+
+.message.received .message-bubble {
+    background: rgba(255,255,255,0.9) !important; backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.08) !important; color: #2d3748 !important;
+    border-radius: 22px 22px 22px 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* MESSAGE BUBBLES */
+.message-bubble {
+    padding: 1.25rem 1.5rem; position: relative; word-wrap: break-word;
+    line-height: 1.5; font-size: 0.95rem;
+}
+
+/* MESSAGE TAILS */
+.message.sent .message-bubble::before {
+    content: ''; position: absolute; left: -10px; top: 16px;
+    width: 0; height: 0; border: 10px solid transparent; border-right-color: #667eea; z-index: 1;
+}
+
+.message.received .message-bubble::before {
+    content: ''; position: absolute; right: -10px; top: 16px;
+    width: 0; height: 0; border: 10px solid transparent; border-left-color: rgba(255,255,255,0.9);
+}
+
+/* AVATARS & STATUS */
+.message-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white; font-weight: 700; font-size: 1.15rem; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(72,187,120,0.3);
+}
+
+.message-status {
+    display: flex; align-items: flex-end; padding-bottom: 0.25rem;
+    font-size: 0.8rem; color: rgba(255,255,255,0.9); margin-right: 0.75rem;
+}
+
+.message-time {
+    font-size: 0.75rem; opacity: 0.85; margin-top: 0.5rem; font-weight: 500;
+}
+
+/* MESSAGE INPUT */
+.message-input-wrapper { 
+    padding: 1.75rem 2rem 2.5rem; background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px); border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.message-input {
+    display: flex; gap: 1rem; align-items: center;
+    background: rgba(255,255,255,0.9); padding: 1.25rem 1.75rem; 
+    border-radius: 32px; box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    backdrop-filter: blur(20px);
+}
+
+.message-input input {
+    flex: 1; border: none; outline: none; font-size: 1rem; background: transparent; color: #2d3748;
+}
+
+.send-btn { 
+    width: 52px; height: 52px; border-radius: 50%; 
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 20px rgba(72,187,120,0.3);
+}
+
+.send-btn:hover { 
+    transform: scale(1.08) rotate(5deg); 
+    box-shadow: 0 12px 30px rgba(72,187,120,0.4); 
+}
+
+/* EMPTY STATES */
+.empty-state, .empty-chat {
+    text-align: center; color: #718096; padding: 5rem 3rem;
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.empty-state i, .empty-chat i { font-size: 5rem; margin-bottom: 1.5rem; opacity: 0.4; }
+.empty-chat h3 { color: #4a5568; margin: 0 0 1rem 0; font-size: 1.5rem; font-weight: 600; }
+
+/* ANIMATIONS */
+@keyframes messageSlideIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* MODAL */
+.new-msg-modal {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10000; display: flex; align-items: center; justify-content: center;
+}
+
+.modal-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+    opacity: 0; visibility: hidden; transition: all 0.3s ease;
+}
+
+.new-msg-modal.show .modal-overlay { opacity: 1; visibility: visible; }
+
+.modal-content {
+    background: rgba(255,255,255,0.98); backdrop-filter: blur(40px);
+    border-radius: 28px; width: 95%; max-width: 480px; max-height: 85vh;
+    overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.25);
+    transform: translateY(20px) scale(0.95); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.new-msg-modal.show .modal-content { transform: translateY(0) scale(1); }
+
+.modal-header {
+    padding: 2rem 2.5rem 0; display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid rgba(0,0,0,0.06); margin-bottom: 1.5rem;
+}
+
+.modal-title { display: flex; align-items: center; gap: 0.75rem; }
+.modal-title i { font-size: 1.5rem; color: #667eea; }
+.modal-title h3 { margin: 0; font-size: 1.5rem; font-weight: 700; color: #1a202c; }
+
+.close-modal {
+    background: none; border: none; font-size: 1.5rem; color: #a0aec0; 
+    cursor: pointer; padding: 0.5rem; border-radius: 50%; transition: all 0.2s ease;
+}
+
+.close-modal:hover { background: rgba(0,0,0,0.05); color: #4a5568; }
+
+.modal-body { padding: 0 2.5rem 1.5rem; }
+
+.recipient-preview {
+    background: rgba(102,126,234,0.08); border: 1px solid rgba(102,126,234,0.2);
+    border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+}
+
+.avatar-xl {
+    width: 56px; height: 56px; border-radius: 50%; 
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; font-size: 1.6rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.recipient-name-lg { font-size: 1.3rem; font-weight: 600; color: #2d3748; margin: 0; }
+.status-dot { width: 10px; height: 10px; background: #48bb78; border-radius: 50%; display: inline-block; margin-left: 0.5rem; }
+
+.message-input-container input {
+    padding: 1.25rem 1.5rem; border: 2px solid rgba(0,0,0,0.08); border-radius: 20px;
+    font-size: 1rem; background: rgba(255,255,255,0.8); transition: all 0.2s ease; width: 100%;
+}
+
+.message-input-container input:focus {
+    outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+.send-btn-primary {
+    padding: 1.1rem 2rem; background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white; border: none; border-radius: 20px; font-weight: 600; font-size: 1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.send-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px); box-shadow: 0 10px 25px rgba(72,187,120,0.4);
+}
+
+.send-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.users-section { border-top: 1px solid rgba(0,0,0,0.06); padding-top: 2rem; }
+
+.section-label {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2.5rem 1.5rem; margin-bottom: 1rem;
+}
+
+.section-label h4 { margin: 0; font-size: 1.1rem; font-weight: 600; color: #4a5568; }
+.user-count { font-size: 0.85rem; color: #718096; font-weight: 500; }
+
+.user-list { max-height: 320px; overflow-y: auto; padding: 0 2.5rem 2rem; }
+
+.user-item {
+    display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem;
+    border-radius: 20px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 0.5rem;
+}
+
+.user-item:hover, .user-item.selected {
+    background: rgba(102,126,234,0.08); transform: translateX(6px);
+    box-shadow: 0 8px 25px rgba(102,126,234,0.15);
+}
+
+.user-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; font-weight: 700; font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.user-details { flex: 1; }
+.user-name { font-weight: 600; font-size: 1rem; color: #2d3748; margin: 0 0 0.25rem 0; }
+.user-subtitle { font-size: 0.85rem; color: #718096; }
+
+.user-action {
+    color: #a0aec0; font-size: 1rem; opacity: 0; transition: all 0.2s ease;
+}
+
+.user-item:hover .user-action, .user-item.selected .user-action {
+    opacity: 1; color: #667eea;
+}
+
+/* 🔥 FIX: Prevent close button zoom/conflict */
+.close-modal:active,
+.close-modal:focus,
+.new-msg-modal.closing .close-modal {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* 🔥 Smooth close - disable transforms during close */
+.new-msg-modal.closing .modal-content,
+.new-msg-modal.closing .close-modal {
+    transform: none !important;
+    transition: opacity 0.2s ease !important;
+}
+
+/* 🔥 Prevent double-transform on hover during close */
+.close-modal:hover {
+    background: rgba(0,0,0,0.05);
+    color: #4a5568;
+    transform: none !important;  /* Disable hover transform */
+}
+
+.close-modal * { pointer-events: none !important; }
+
+
+
+/* RESPONSIVE */
+@media (max-width: 1024px) { .chat-sidebar { width: 320px; } }
+@media (max-width: 768px) {
+    .messages-wrapper { padding: 1rem; }
+    .messages-container { height: calc(100vh - 100px); border-radius: 24px; flex-direction: column; }
+    .chat-sidebar { width: 100%; height: 250px; order: 2; }
+    .message.sent, .message.received { max-width: 85%; }
+}
+
+
+
+
+
+
+/* ========================================================================== 
+   15. AUTH PAGES 
+   ========================================================================== */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.auth-card {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(25px);
+    padding: 3rem;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-header h1 { font-size: 2.5rem; color: #2d3748; font-weight: 800; margin-bottom: 0.5rem; }
+.auth-header p { color: #718096; font-size: 1.1rem; margin: 0; }
+
+
+/* ========================================================================== 
+   16. MENTORS PAGE (with View Profile buttons)
+   ========================================================================== */
+.mentors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+.mentor-card {
+    position: relative;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+}
+
+.mentor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+}
+
+.mentor-card h3 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.mentor-card p {
+    color: #718096;
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+}
+
+.view-profile-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 85%;
+    box-shadow: 0 8px 25px rgba(16,185,129,0.3);
+}
+
+.view-profile-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 12px 35px rgba(16,185,129,0.4);
+}
+
+/* ========================================================================== 
+   17. MY TASKS PAGE (Clean Card Layout)
+   ========================================================================== */
+
+   /* ===== TASKS PAGE STYLES ===== */
+/* Clean, responsive, modern look */
+
+/* 🌙 Base & Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #212529;
+}
+
+.container-fluid {
+    padding: 2rem 1rem;
+}
+
+/* 🔹 Headers */
+h2 {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+h2 i {
+    font-size: 1.5rem;
+}
+
+small.text-muted {
+    font-size: 0.9rem;
+}
+
+/* 🔹 Filters & Inputs */
+.input-group-lg .form-control,
+.form-select-lg {
+    height: 3rem;
+    font-size: 1rem;
+}
+
+.input-group-text {
+    background-color: #fff;
+    border-right: 0;
+}
+
+.input-group .form-control {
+    border-left: 0;
+}
+
+/* 🔹 Tasks Grid */
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* 🔹 Task Card */
+.task-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.task-priority .badge {
+    font-size: 0.8rem;
+    padding: 0.35em 0.6em;
+}
+
+.task-actions a {
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+}
+
+/* 🔹 Task Body */
+.task-body {
+    flex: 1;
+}
+
+.task-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.task-description {
+    font-size: 0.95rem;
+    color: #495057;
+    margin-bottom: 0.75rem;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.task-meta .meta-item i {
+    margin-right: 0.25rem;
+}
+
+/* 🔹 Task Footer & Progress */
+.task-footer .task-progress {
+    margin-top: 0.75rem;
+}
+
+.task-footer .progress {
+    height: 6px;
+    border-radius: 3px;
+    background-color: #e9ecef;
+}
+
+.task-footer .progress-bar {
+    background-color: #0d6efd;
+}
+
+/* 🔹 Status Colors */
+.task-item.submitted {
+    border-left: 4px solid #ffc107;
+}
+
+.task-item.graded {
+    border-left: 4px solid #198754;
+}
+
+/* 🔹 Empty State */
+.empty-state-large {
+    text-align: center;
+    margin-top: 3rem;
+    color: #6c757d;
+}
+
+.empty-state-large h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.empty-state-large p {
+    margin-bottom: 1rem;
+}
+
+/* 🔹 Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-item {
+    animation: fadeInUp 0.3s ease;
+}
+
+
+
+/* ===== GRADING QUEUE STYLES ===== */
+
+/* Container padding */
+.container.py-4 {
+    max-width: 1200px;
+}
+
+/* Header */
+h2.fw-bold {
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Badges (Date / Status) */
+.custom-card .badge {
+    display: inline-block;
+    padding: 0.45rem 0.85rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+/* Specific badge colors */
+.custom-card .badge.bg-secondary {
+    background-color: #4a90e2; /* Date */
+    color: #fff;
+}
+
+.custom-card .badge.bg-warning {
+    background-color: #f7c948; /* Pending */
+    color: #212529;
+}
+
+/* Card hover */
+.custom-card {
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Card body */
+.custom-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Student name */
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Task title/description */
+.text-muted.small {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Actions */
+.custom-card .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* View button */
+.custom-card .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.custom-card .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Grade button */
+.custom-card .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.custom-card .btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Make buttons equal height */
+.custom-card .d-flex.gap-2 .btn {
+    flex: 1;
+}
+
+/* Responsive spacing */
+@media (max-width: 767px) {
+    .custom-card .d-flex.gap-2 {
+        flex-direction: column;
+    }
+    .custom-card .d-flex.gap-2 .btn {
+        width: 100%;
+    }
+}
+
+/* Empty state */
+.text-center.mt-5 h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.text-center.mt-5 p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}

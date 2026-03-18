@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<div class="messages-wrapper">
+
+    <!-- NEW MESSAGE BUTTON -->
+    <div class="new-message-bar">
+        <button class="new-msg-btn" id="newMessageBtn">
+            <i class="fas fa-plus"></i>
+            <span>New Message</span>
+        </button>
+    </div>
+
+    <div class="messages-container">
+
+        <!-- CHAT SIDEBAR -->
+        <div class="chat-sidebar">
+            <div class="chat-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search conversations..." disabled>
+            </div>
+            
+            <div class="chat-list">
+                {% if contacts %}
+                    {% for contact in contacts %}
+                    <div class="chat-contact {% if contact.name == active_receiver %}active{% endif %}" 
+                         data-contact="{{ contact.name }}">
+                        <div class="contact-avatar">{{ contact.name[0]|upper }}</div>
+                        <div class="contact-details">
+                            <div class="contact-name">{{ contact.name }}</div>
+                            <div class="contact-preview">Recent message</div>
+                        </div>
+                        <div class="contact-time">{{ contact.last_time[-5:] if contact.last_time else '' }}</div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-comments"></i>
+                        <p>No conversations yet</p>
+                        <small>Start one with New Message!</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- MAIN CHAT -->
+        <div class="chat-main">
+            {% if active_receiver %}
+            <div class="chat-header-main">
+                <div class="chat-user-info">
+                    <div class="user-avatar-lg">{{ active_receiver[0]|upper }}</div>
+                    <div>
+                        <h3 id="chatTitle">{{ active_receiver }}</h3>
+                        <span class="status-online"></span>
+                        <small>Active now</small>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="chat-messages" id="messages">
+                {% if messages %}
+                    {% for msg in messages %}
+                        {% if msg[0] == user.name %}
+                            <div class="message sent">
+                                <div class="message-bubble">
+                                    {{ msg[2] }}
+                                    <div class="message-time">{{ msg[3][-8:-6] }}:{{ msg[3][-5:-3] }}</div>
+                                </div>
+                                <div class="message-status">
+                                    <i class="fas fa-check-double"></i>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="message received">
+                                <div class="message-avatar">{{ msg[0][0]|upper }}</div>
+                                <div class="message-bubble">
+                                    {{ msg[2] }}
+                                    <div class="message-time">{{ msg[3][-8:-6] }}:{{ msg[3][-5:-3] }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-chat">
+                        <i class="fas fa-comment-dots"></i>
+                        <h3>Message "{{ active_receiver or 'someone' }}"</h3>
+                        <p>Send your first message to start chatting!</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if active_receiver %}
+            <form method="POST" class="message-input-wrapper" id="messageForm">
+                <input type="hidden" name="receiver" id="currentReceiver" value="{{ active_receiver }}">
+                <div class="message-input">
+                    <input type="text" name="message" placeholder="Type a message..." required autocomplete="off">
+                    <button type="submit" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- NEW MESSAGE MODAL -->
+    <div id="newMessageModal" class="new-msg-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-message-plus"></i>
+                    <h3>New Message</h3>
+                </div>
+                <button class="close-modal" id="closeModalBtn" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form method="POST" class="new-msg-form" id="newMessageForm">
+                    <input type="hidden" name="receiver" id="newReceiver">
+                    
+                    <div class="recipient-preview" id="recipientPreview" style="display: none;">
+                        <div class="recipient-info">
+                            <div class="avatar-xl" id="selectedAvatar"></div>
+                            <div>
+                                <div class="recipient-name-lg" id="recipientNameLg">Select recipient</div>
+                                <span class="status-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <input type="text" name="message" placeholder="Type your message..." required>
+                        <button type="submit" class="send-btn-primary" id="sendNewMsgBtn" disabled>
+                            <i class="fas fa-paper-plane"></i> Start Chat
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="users-section">
+                <div class="section-label">
+                    <h4>Message Anyone</h4>
+                    <span class="user-count">{{ other_users|length }} users</span>
+                </div>
+                <div class="user-list">
+                    {% for user_option in other_users %}
+                    <div class="user-item" data-user="{{ user_option }}">
+                        <div class="user-avatar">{{ user_option[0]|upper }}</div>
+                        <div class="user-details">
+                            <div class="user-name">{{ user_option }}</div>
+                            <div class="user-subtitle">Click to message</div>
+                        </div>
+                        <div class="user-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.chat-contact {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.chat-contact:hover {
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+.chat-contact.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.chat-contact.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+.message-input input {
+    transition: all 0.2s ease;
+}
+.message-input input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const modal = document.getElementById('newMessageModal');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const overlay = modal.querySelector('.modal-overlay');
+
+    // OPEN/CLOSE MODAL
+    document.getElementById('newMessageBtn').addEventListener('click', () => modal.style.display = 'flex');
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    overlay.addEventListener('click', () => modal.style.display = 'none');
+    document.addEventListener('keydown', (e) => { if(e.key==='Escape') modal.style.display='none'; });
+
+    // RESET MODAL
+    modal.addEventListener('transitionend', () => {
+        if(modal.style.display==='none'){
+            document.getElementById('newMessageForm').reset();
+            document.getElementById('recipientPreview').style.display='none';
+            document.getElementById('sendNewMsgBtn').disabled=true;
+            document.querySelectorAll('.user-item').forEach(i=>i.classList.remove('selected'));
+        }
+    });
+
+    // SCROLL CHAT
+    const messagesDiv = document.getElementById('messages');
+    if(messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    // 🔥 AJAX SIDEBAR CONTACT CLICK - NO RELOAD!
+    document.querySelectorAll('.chat-contact').forEach(contact => {
+        contact.addEventListener('click', function() {
+            const name = this.getAttribute('data-contact');
+            if(name && name !== document.getElementById('currentReceiver')?.value) {
+                // Show loading
+                this.classList.add('loading');
+                
+                // AJAX request to switch chat
+                fetch('/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `receiver=${encodeURIComponent(name)}`
+                })
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Update chat title
+                    const newTitle = doc.getElementById('chatTitle');
+                    if(newTitle) document.getElementById('chatTitle').textContent = newTitle.textContent;
+                    
+                    // Update messages
+                    const newMessages = doc.getElementById('messages');
+                    if(newMessages) {
+                        document.getElementById('messages').innerHTML = newMessages.innerHTML;
+                    }
+                    
+                    // Update message form
+                    const newChatMain = doc.querySelector('.chat-main');
+                    if(newChatMain) {
+                        const currentChatMain = document.querySelector('.chat-main');
+                        const messageForm = newChatMain.querySelector('#messageForm');
+                        if(messageForm && currentChatMain) {
+                            // Replace form receiver and re-attach event
+                            document.getElementById('currentReceiver').value = name;
+                            currentChatMain.querySelector('#messageForm').innerHTML = messageForm.innerHTML;
+                            attachMessageHandler();
+                        }
+                    }
+                    
+                    // Scroll to bottom
+                    setTimeout(() => {
+                        const msgs = document.getElementById('messages');
+                        if(msgs) msgs.scrollTop = msgs.scrollHeight;
+                    }, 100);
+                })
+                .catch(err => {
+                    console.error('Switch failed:', err);
+                    alert('Failed to switch chat');
+                })
+                .finally(() => {
+                    document.querySelectorAll('.chat-contact').forEach(c => c.classList.remove('loading'));
+                });
+                
+                // Update active class
+                document.querySelectorAll('.chat-contact').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // 🔥 AJAX MESSAGE SEND
+    function attachMessageHandler() {
+        const messageForm = document.getElementById('messageForm');
+        if(messageForm) {
+            messageForm.removeEventListener('submit', handleMessageSubmit); // Prevent duplicates
+            messageForm.addEventListener('submit', handleMessageSubmit);
+        }
+    }
+
+    function handleMessageSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const sendBtn = form.querySelector('.send-btn');
+        const input = form.querySelector('input[name="message"]');
+        
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        fetch('/messages', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newMessages = doc.getElementById('messages');
+            
+            if(newMessages) {
+                document.getElementById('messages').innerHTML = newMessages.innerHTML;
+                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+            }
+            
+            // Clear input
+            input.value = '';
+        })
+        .catch(err => {
+            console.error('Send failed:', err);
+            alert('Failed to send message');
+        })
+        .finally(() => {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+        });
+    }
+
+    // Attach message handler on load
+    attachMessageHandler();
+
+    // NEW MESSAGE MODAL USER CLICK
+    document.querySelectorAll('.user-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const name = this.getAttribute('data-user');
+            const receiverInput = document.getElementById('newReceiver');
+            const preview = document.getElementById('recipientPreview');
+            const nameLg = document.getElementById('recipientNameLg');
+            const avatar = document.getElementById('selectedAvatar');
+            const sendBtn = document.getElementById('sendNewMsgBtn');
+
+            receiverInput.value = name;
+            preview.style.display = 'flex';
+            nameLg.textContent = name;
+            avatar.textContent = name[0].toUpperCase();
+            sendBtn.disabled = false;
+
+            document.querySelectorAll('.user-item').forEach(i => i.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+});
+</script>
+{% endblock %}

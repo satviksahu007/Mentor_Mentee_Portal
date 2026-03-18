@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ user.name }}'s Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- STATS ROW -->
+    <div class="stats-grid">
+        {% if user.role == 'mentee' %}
+            <div class="stat-card green">
+                <i class="icon">📊</i>
+                <div class="stat-content">
+                    <h3>{{ "%.1f"|format(avg_score) }}</h3>
+                    <p>Avg Score</p>
+                </div>
+            </div>
+            <div class="stat-card blue">
+                <i class="icon">⭐</i>
+                <div class="stat-content">
+                    <h3>{{ max_score }}</h3>
+                    <p>Best Score</p>
+                </div>
+            </div>
+            <div class="stat-card orange">
+                <i class="icon">📈</i>
+                <div class="stat-content">
+                    <h3>{{ total_tasks }}</h3>
+                    <p>Total Tasks</p>
+                </div>
+            </div>
+        {% else %}
+            <div class="stat-card purple">
+                <i class="icon">👥</i>
+                <div class="stat-content">
+                    <h3>{{ mentor_mentees }}</h3>
+                    <p>Mentees</p>
+                </div>
+            </div>
+            <div class="stat-card blue">
+                <i class="icon">📋</i>
+                <div class="stat-content">
+                    <h3>{{ mentor_tasks }}</h3>
+                    <p>Total Tasks</p>
+                </div>
+            </div>
+            <div class="stat-card yellow">
+                <i class="icon">📊</i>
+                <div class="stat-content">
+                    <h3>{{ "%.1f"|format(mentor_avg) }}</h3>
+                    <p>Avg Score</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- CHART SECTION -->
+    <div class="chart-section">
+        <div class="chart-card">
+            <img src="{{ url_for('static', filename='charts/progress.png') }}" 
+                 alt="Progress Chart" 
+                 class="dashboard-chart">
+        </div>
+    </div>
+</div>
+{% endblock %}

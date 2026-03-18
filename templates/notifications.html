@@ -1,0 +1,12 @@
+<div class="container mt-4">
+    <h2>🔔 Notifications ({{ unread_count }} unread)</h2>
+    {% for notif in notifs %}
+    <div class="card mb-2 {% if not notif[3] %}border-warning{% endif %}">
+        <div class="card-body">
+            <h6 class="card-title {{ 'text-success' if notif[2]=='success' else 'text-info' }}">{{ notif[0] }}</h6>
+            <p class="card-text">{{ notif[1] }}</p>
+            <small class="text-muted">{{ notif[4] }}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">
+                <i class="fas fa-tasks me-2 text-primary"></i>
+                My Tasks
+            </h2>
+            <small class="text-muted">
+                {% if user.role == 'mentee' %}
+                    Tasks assigned to you
+                {% else %}
+                    Tasks you've assigned
+                {% endif %}
+            </small>
+        </div>
+        
+        {% if user.role == 'mentor' %}
+        <a href="/assign_task" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>
+            Assign New Task
+        </a>
+        {% endif %}
+    </div>
+
+    
+
+    <!-- TASKS GRID -->
+    <div class="tasks-grid" id="tasksGrid">
+        {% if tasks %}
+            {% for task in tasks %}
+            <div class="task-card task-item {% if task.status == 'submitted' %}submitted{% elif task.status == 'graded' %}graded{% endif %}" 
+                 data-title="{{ task.title|lower }}" 
+                 data-status="{{ task.status or 'assigned' }}"
+                 data-deadline="{{ task.deadline }}"
+                 data-student="{{ task.student_name or '' }}">
+                
+                <div class="task-header">
+                    <div class="task-priority">
+                        {% if task.deadline < today %}
+                            <span class="badge bg-danger">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                Overdue
+                            </span>
+                        {% elif task.status == 'submitted' %}
+                            <span class="badge bg-warning">
+                                <i class="fas fa-clock me-1"></i>
+                                Awaiting Review
+                            </span>
+                        {% elif task.status == 'graded' %}
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>
+                                Graded: {{ task.score }}/100
+                            </span>
+                        {% else %}
+                            <span class="badge bg-primary">
+                                {{ task.status or 'Assigned' }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="task-actions">
+                        {% if task.file_path %}
+                        <a href="{{ url_for('uploaded_file', filename=task.file_path.replace('static/uploads/', '')) }}" 
+                        class="btn btn-sm btn-outline-secondary" target="_blank">
+                            <i class="fas fa-file me-1"></i>
+                            View
+                        </a>
+                        {% endif %}
+                        
+                        {% if user.role == 'mentee' and task.status != 'submitted' %}
+                        <a href="/task_submit/{{ task.id }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-upload me-1"></i>
+                            Submit
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="task-body">
+                    <h5 class="task-title">{{ task.title }}</h5>
+                    
+                    {% if task.description %}
+                    <p class="task-description">{{ task.description[:100] }}{% if task.description|length > 100 %}...{% endif %}</p>
+                    {% endif %}
+
+                    <div class="task-meta">
+                        {% if user.role == 'mentor' %}
+                            <div class="meta-item">
+                                <i class="fas fa-user me-1"></i>
+                                <strong>{{ task.student_name or 'Unassigned' }}</strong>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="meta-item">
+                            <i class="fas fa-calendar me-1"></i>
+                            <strong>Due:</strong> {{ task.deadline }}
+                            {% if task.deadline < today %}
+                                <span class="text-danger ms-1">(Overdue)</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="meta-item">
+                            <i class="fas fa-clock me-1"></i>
+                            <strong>Created:</strong> {{ task.created_at[:10] if task.created_at else 'N/A' }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-footer">
+                   
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-large">
+                <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
+                <h3>No tasks yet</h3>
+                {% if user.role == 'mentor' %}
+                    <p class="text-muted mb-4">Assign your first task to get started!</p>
+                    <a href="/assign_task" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i>
+                        Assign Task
+                    </a>
+                {% else %}
+                    <p class="text-muted">No tasks assigned to you yet.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+   
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('taskSearch');
+    const statusFilter = document.getElementById('statusFilter');
+    const sortSelect = document.getElementById('sortSelect');
+    const taskItems = document.querySelectorAll('.task-item');
+    const noTasksMessage = document.getElementById('noTasksMessage');
+
+    function filterTasks() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const statusValue = statusFilter.value;
+        let visibleCount = 0;
+
+        taskItems.forEach(task => {
+            const title = task.dataset.title;
+            const status = task.dataset.status;
+            const student = task.dataset.student.toLowerCase();
+
+            const matchesSearch = title.includes(searchTerm) || student.includes(searchTerm);
+            const matchesStatus = !statusValue || status === statusValue;
+
+            if (matchesSearch && matchesStatus) {
+                task.style.display = 'block';
+                task.style.animation = 'fadeInUp 0.3s ease';
+                visibleCount++;
+            } else {
+                task.style.display = 'none';
+            }
+        });
+
+        noTasksMessage.classList.toggle('d-none', visibleCount > 0);
+    }
+
+    searchInput.addEventListener('input', debounce(filterTasks, 300));
+    statusFilter.addEventListener('change', filterTasks);
+
+    sortSelect.addEventListener('change', function() {
+        const grid = document.getElementById('tasksGrid');
+        const tasksArray = Array.from(taskItems).filter(t => t.style.display !== 'none');
+        tasksArray.sort((a, b) => a.dataset.deadline.localeCompare(b.dataset.deadline));
+        tasksArray.forEach(task => grid.appendChild(task));
+    });
+
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    filterTasks();
+});
+
+</script>
+{% endblock %}  

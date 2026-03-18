@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📝 Grade Submission</h2>
+        <a href="/my_mentees" class="btn btn-outline-light">← Back</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card custom-card p-4">
+
+                <!-- STUDENT INFO -->
+                <div class="mb-3">
+                    <h5 class="card-title">{{ submission.student }}</h5>
+                    <p class="text-muted small mb-2">{{ submission.task or submission.task_title }}</p>
+                    <div class="mb-3">
+                        <span class="badge bg-secondary">{{ submission.date }}</span>
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    </div>
+                </div>
+
+                <!-- FILE VIEW -->
+                {% if submission.file_path %}
+                <div class="mb-3">
+                    <a href="{{ url_for('static', filename=submission.file_path.split('static/')[-1] | replace('\\','/')) }}"
+                    class="btn btn-success w-100" target="_blank">
+                    👁 View Submitted File
+                    </a>
+                </div>
+                {% endif %}
+
+                <!-- GRADE FORM -->
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Score</label>
+                        <input type="number"
+                               name="score"
+                               class="form-control custom-input"
+                               placeholder="Enter score (0-100)"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Feedback</label>
+                        <textarea name="feedback"
+                                  class="form-control custom-input"
+                                  rows="4"
+                                  placeholder="Write feedback..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        ✅ Submit Grade
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

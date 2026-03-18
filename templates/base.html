@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MentorHub{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        {% if session.user %}
+        <div class="nav-brand">
+            <i class="fas fa-graduation-cap"></i>
+            <span>{{ session.user.name }}</span>
+            <small>({{ session.user.role.title() }})</small>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            {% if session.user.role == 'mentee' %}
+            <a href="{{ url_for('my_tasks') }}"><i class="fas fa-tasks"></i> My Tasks</a>
+            {% elif session.user.role == 'mentor' %}
+            <a href="{{ url_for('my_mentees') }}"><i class="fas fa-users"></i> My Mentees</a>
+            <a href="{{ url_for('assign_task') }}"><i class="fas fa-plus-circle"></i> Assign Task</a>
+            <a href="{{ url_for('grading_queue') }}"><i class="fas fa-clipboard-list"></i> Grading</a>
+            {% endif %}
+            <a href="{{ url_for('messages') }}"><i class="fas fa-envelope"></i> Messages</a>
+            <a href="{{ url_for('mentors') }}"><i class="fas fa-chalkboard-teacher"></i> Mentors</a>
+            <a href="{{ url_for('logout') }}" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'warning' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Auto-hide alerts
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

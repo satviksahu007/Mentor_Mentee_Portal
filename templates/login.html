@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Login - MentorHub{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>👋 Welcome Back</h1>
+            <p>Login to your MentorHub account</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <input type="email" 
+                       name="email" 
+                       id="email" 
+                       class="form-input" 
+                       placeholder="mentee@domain.com" 
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input type="password" 
+                       name="password" 
+                       id="password" 
+                       class="form-input" 
+                       placeholder="Enter your password" 
+                       required>
+            </div>
+
+            <button type="submit" class="btn-primary full-width">
+                Login →
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="/register">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

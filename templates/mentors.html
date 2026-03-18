@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Mentors{% endblock %}
+
+{% block content %}
+<div class="mentors-wrapper">
+    <div class="page-header">
+        <h1>Mentors</h1>
+        <p>Connect with experienced mentors for your learning journey</p>
+    </div>
+
+    <div class="mentors-grid">
+        {% for mentor in mentors %}
+        <div class="mentor-card" onclick="selectMentor('{{ mentor[0] }}')">
+            <div class="mentor-avatar">
+                {{ mentor[0][0]|upper }}
+            </div>
+            <div class="mentor-info">
+                <h3>{{ mentor[0] }}</h3>
+                <div class="mentor-specialization">
+                    {{ mentor[1] }}
+                </div>
+                <div class="mentor-action">
+                    <span>Message</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function selectMentor(name) {
+    // Redirect to messages with this mentor selected
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/messages';
+    form.style.display = 'none';
+    form.innerHTML = `<input type="hidden" name="receiver" value="${name}">`;
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+{% endblock %}
