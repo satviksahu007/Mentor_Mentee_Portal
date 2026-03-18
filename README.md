@@ -62,5 +62,3 @@ A full-stack web application built using Flask that enables seamless interaction
   - Matplotlib
 
 ---
-
-## 📁 Project Structure
