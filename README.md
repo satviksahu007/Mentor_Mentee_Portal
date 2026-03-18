@@ -1,4 +1,6 @@
-﻿# Mentor_Mentee_Portal
+This Project Was Done Under the mentorship of Dr.Swagat Ranjan Sahoo (Professor At KIIT UNIVERSITY)
+
+# Mentor_Mentee_Portal
 # 🚀 Mentor Mentee Portal (MentorHub)
 
 A full-stack web application built using Flask that enables seamless interaction between mentors and mentees through task management, submissions, grading, and performance tracking.
